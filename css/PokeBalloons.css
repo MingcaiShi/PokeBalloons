@@ -1,0 +1,115 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+#box{
+    position: fixed;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    background: url(../img/background.jpg) no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+#scole{
+    position: absolute;
+    font-size: 24px;
+    font-weight: 800;
+    color: white;
+    width: 200px;
+    height: 60px;
+    top: 40px;
+    left: 20px;
+}
+#countDown{
+    position: absolute;
+    font-size: 24px;
+    font-weight: 800;
+    color: white;
+    width: 200px;
+    height: 60px;
+    top: 100px;
+    left: 20px;
+}
+.balloons{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 90px;
+    height: 120px;
+    background: url(../img/balloon.png);
+}
+.middle{
+    position: absolute;
+    height: 200px;
+    width: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    opacity: .8;
+    border-radius: 10px;
+}
+.gameName{
+    height: 100px;
+    width: 300px;
+    line-height: 100px;
+    text-align: center;
+    color: blue;
+    font-size: 36px;
+}
+.middle_bottom{
+    display: block;
+    text-align: center;
+    background-color: crimson;
+    color: white;
+    margin-left: 100px;
+    width: 100px;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 5px;
+}
+.none{
+    display: none;
+}
+.show{
+    display: block;
+}
+.middle_bottom:hover{
+    cursor: pointer;
+}
+.balloon1{
+    background-position: 0 0;
+}
+.balloon2{
+    background-position: -90px 0;
+}
+.balloon3{
+    background-position: -190px 0;
+}
+.balloon4{
+    background-position: -285px 0;
+}
+.balloon5{
+    background-position: 0 -120px;
+}
+.balloon6{
+    background-position: -90px -120px;
+}
+.balloon7{
+    background-position: -190px -120px;
+}
+.balloon8{
+    background-position: -285px -120px;
+}
+.double{
+    background-position: 0px -245px;
+}
+.halve{
+    background-position: -90px -245px;
+}
+.Zeroing{
+    background-position: -190px -245px;
+}

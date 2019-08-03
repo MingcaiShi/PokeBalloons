@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>戳爆气球</title>
+    <link rel="stylesheet" href="css/PokeBalloons.css">
+</head>
+
+<body>
+    <audio id="bgm" loop="loop">
+        <source src="audio/水谷広実 (みずたに ひろみ) - 漕げ漕げカエル (蹬蹬跳跳的青蛙).mp3"></audio>
+    <audio id="boom">
+        <source src="audio/积极得分金光闪闪(Positive Score Bling)_爱给网_aigei_com.mp3"></audio>
+    <audio id="over">
+        <source src="audio/[2800] 通用游戏音效库-游戏结束了1(The Game_爱给网_aigei_com.mp3"></audio>
+    <ul id="box"></ul>
+    <div id="scole">得分：0</div>
+    <div id="countDown">30</div>
+    <div id="index" class="middle show">
+        <p class="gameName">戳爆气球</p>
+        <span id="begin" class="middle_bottom">开始游戏</span>
+    </div>
+    <div id="gameOver" class="middle none">
+        <p class="gameName" id="showScole">恭喜您！0分！</p>
+        <span id="oneMore" class="middle_bottom">再来一局</span>
+    </div>
+</body>
+<script>
+    function myRandom(max, min) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    };
+    var classArr = ["balloon1", "balloon2", "balloon3", "balloon4", "balloon5", "balloon6", "balloon7", "balloon8", "Zeroing", "halve", "double"];
+    var scoleArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0];
+    var clientWidth = document.body.clientWidth;
+    var box = document.getElementById("box");
+    var scoleBox = document.getElementById('scole');
+    var countDownBox = document.getElementById('countDown');
+    var index = document.getElementById("index");
+    var bgm = document.querySelector("#bgm");
+    var boom = document.querySelector("#boom");
+    var begin = document.getElementById("begin");
+    var oneMore = document.getElementById("oneMore");
+    var gameOver = document.getElementById("gameOver");
+    var showScole = document.getElementById("showScole");
+    var over = document.getElementById("over");
+    var countDown = 30;
+    var scole = 0;
+
+    //声明构造函数
+    function Balloons() {
+        this.bottom = -120;
+        this.left = 0;
+        this.scole = 0;
+        this.dom = "";
+        this.class = "";
+        this.init();
+    };
+
+    //数据初始化
+    Balloons.prototype.init = function () {
+        var that = this;
+        this.parent = box;
+        this.index = myRandom(10, 0);
+        this.dom = document.createElement("li");
+        this.class = classArr[this.index];
+        this.scole = scoleArr[this.index];
+        this.dom.classList.add("balloons");
+        this.dom.classList.add(this.class);
+        this.dom.style.bottom = this.bottom + 'px';
+        this.left = myRandom(clientWidth - 100, 0);
+        this.dom.style.left = this.left + 'px';
+        this.parent.appendChild(this.dom);
+        this.move();
+
+        //绑定点击事件
+        this.dom.onclick = function () {
+            if (that.scole == 9) {
+                scole = 0;
+            } else if (that.scole == 10) {
+                scole /= 2;
+            } else if (that.scole == 0) {
+                scole *= 2;
+            } else {
+                scole += that.scole;
+            };
+            boom.play();
+            scoleBox.innerHTML = `得分：${scole}`;
+            that.parent.removeChild(that.dom);
+        }
+    };
+
+    //气球移动
+    Balloons.prototype.move = function () {
+        this.timer = setInterval(() => {
+            this.bottom += this.index + 1;
+            this.dom.style.bottom = this.bottom + 'px';
+            this.die();
+        }, 20);
+    };
+
+    //气球消失
+    Balloons.prototype.die = function () {
+        if (this.dom.offsetTop <= -120) {
+            clearInterval(this.timer);
+            this.parent.removeChild(this.dom);
+        };
+    };
+
+    //游戏开始
+    begin.onclick = function () {
+
+        bgm.play();
+        index.classList.remove("show");
+        index.classList.add("none");
+        // 生成气球对象
+        timer2 = setInterval(function () {
+            new Balloons(".box");
+        }, 500);
+
+        //倒计时
+        timer3 = setInterval(function () {
+            countDownBox.innerHTML = countDown--;
+            if (countDown < 0) {
+                countDown = 0;
+                bgm.pause();
+                over.play();
+                clearInterval(timer2);
+                clearInterval(timer3);
+                box.innerHTML = "";
+                scoleBox.innerHTML = `得分：0`;
+                showScole.innerHTML = `恭喜您！${scole}分！`
+                gameOver.classList.remove("none");
+                gameOver.classList.add("show");
+            };
+        }, 1000);
+    };
+
+    //再来一局
+    oneMore.onclick = function () {
+        over.pause();
+        bgm.play();
+        gameOver.classList.remove("show");
+        gameOver.classList.add("none");
+        countDown = 30;
+        scole = 0;
+        // 生成气球对象
+        timer2 = setInterval(function () {
+            new Balloons(".box");
+        }, 500);
+
+        //倒计时
+        timer3 = setInterval(function () {
+            countDownBox.innerHTML = countDown--;
+            if (countDown < 0) {
+                countDown = 0;
+                bgm.pause();
+                over.play();
+                clearInterval(timer2);
+                clearInterval(timer3);
+                box.innerHTML = "";
+                scoleBox.innerHTML = `得分：0`;
+                showScole.innerHTML = `恭喜您！${scole}分！`
+                gameOver.classList.remove("none");
+                gameOver.classList.add("show");
+            };
+        }, 1000);
+    };
+</script>
+
+</html>
